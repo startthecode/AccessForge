@@ -1,0 +1,1 @@
+package org.samtar.cms.common.exception;
