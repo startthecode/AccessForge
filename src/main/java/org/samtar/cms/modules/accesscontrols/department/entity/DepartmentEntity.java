@@ -1,6 +1,5 @@
 package org.samtar.cms.modules.accesscontrols.department.entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.samtar.cms.modules.shared.enums.Genders;
@@ -17,5 +16,24 @@ public class DepartmentEntity {
     @Column(unique = true,nullable = false)
     @Enumerated(EnumType.STRING)
     Genders department;
+
+    public DepartmentEntity(Genders department) {
+        this.department = department;
+    }
+
+    public DepartmentEntity() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Genders getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Genders department) {
+        this.department = department;
+    }
 }
 

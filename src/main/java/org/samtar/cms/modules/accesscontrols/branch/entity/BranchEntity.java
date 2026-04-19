@@ -2,8 +2,6 @@ package org.samtar.cms.modules.accesscontrols.branch.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import org.samtar.cms.modules.shared.enums.Genders;
-
 
 @Entity
 @Table(name = "branch")
@@ -16,5 +14,23 @@ public class BranchEntity {
     @NotBlank
     @Column(unique = true,nullable = false)
     String branch;
-}
 
+    public BranchEntity(String branch) {
+        this.branch = branch;
+    }
+
+    public BranchEntity() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+}

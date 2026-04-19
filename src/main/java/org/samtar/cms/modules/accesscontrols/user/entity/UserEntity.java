@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import org.samtar.cms.modules.shared.entity.StatusEntity;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity {
 
     @Id
@@ -37,4 +37,78 @@ public class UserEntity {
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "userProfile")
     UserProfile userProfile;
+
+    public UserEntity(Boolean accountLocked, String email, Boolean isSuperAdmin, String password, StatusEntity statusId, String username, UserProfile userProfile) {
+        this.accountLocked = accountLocked;
+        this.email = email;
+        this.isSuperAdmin = isSuperAdmin;
+        this.password = password;
+        this.statusId = statusId;
+        this.username = username;
+        this.userProfile = userProfile;
+    }
+
+    public UserEntity() {
+    }
+
+
+    public Boolean getAccountLocked() {
+        return accountLocked;
+    }
+
+    public void setAccountLocked(Boolean accountLocked) {
+        this.accountLocked = accountLocked;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Boolean getSuperAdmin() {
+        return isSuperAdmin;
+    }
+
+    public void setSuperAdmin(Boolean superAdmin) {
+        isSuperAdmin = superAdmin;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public StatusEntity getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(StatusEntity statusId) {
+        this.statusId = statusId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
 }

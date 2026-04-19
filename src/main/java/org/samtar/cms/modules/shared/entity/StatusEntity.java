@@ -1,9 +1,8 @@
 package org.samtar.cms.modules.shared.entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import org.samtar.cms.modules.shared.enums.Status;
 
 @Entity
 @Table(name = "status")
@@ -15,5 +14,25 @@ public class StatusEntity {
 
     @NotBlank
     @Column(unique = true,nullable = false)
-    String status;
+            @Enumerated(EnumType.STRING)
+    Status status;
+
+    public StatusEntity(Status status) {
+        this.status = status;
+    }
+
+    public StatusEntity() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }

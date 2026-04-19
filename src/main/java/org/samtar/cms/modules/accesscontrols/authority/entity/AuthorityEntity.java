@@ -1,9 +1,7 @@
 package org.samtar.cms.modules.accesscontrols.authority.entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import org.samtar.cms.modules.shared.enums.Genders;
 
 @Entity
 @Table(name = "authority")
@@ -16,4 +14,23 @@ public class AuthorityEntity {
     @NotBlank
     @Column(unique = true,nullable = false)
     String authority;
+
+    public AuthorityEntity(String authority) {
+        this.authority = authority;
+    }
+
+    public AuthorityEntity() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
 }

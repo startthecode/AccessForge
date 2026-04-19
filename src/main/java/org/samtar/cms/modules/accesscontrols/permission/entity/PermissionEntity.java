@@ -6,7 +6,6 @@ import org.samtar.cms.modules.accesscontrols.branch.entity.BranchEntity;
 import org.samtar.cms.modules.accesscontrols.department.entity.DepartmentEntity;
 import org.samtar.cms.modules.accesscontrols.designation.entity.DesignationEntity;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserProfile;
-import org.samtar.cms.modules.shared.enums.Authorities;
 
 @Entity
 @Table(name = "permissions")
@@ -35,4 +34,59 @@ public class PermissionEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "authority")
     private AuthorityEntity authority;
+
+    public PermissionEntity(AuthorityEntity authority, BranchEntity branch, DepartmentEntity department, DesignationEntity designation, UserProfile userProfile) {
+        this.authority = authority;
+        this.branch = branch;
+        this.department = department;
+        this.designation = designation;
+        this.userProfile = userProfile;
+    }
+
+    public PermissionEntity() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    public DepartmentEntity getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentEntity department) {
+        this.department = department;
+    }
+
+    public BranchEntity getBranch() {
+        return branch;
+    }
+
+    public void setBranch(BranchEntity branch) {
+        this.branch = branch;
+    }
+
+    public DesignationEntity getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(DesignationEntity designation) {
+        this.designation = designation;
+    }
+
+    public AuthorityEntity getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(AuthorityEntity authority) {
+        this.authority = authority;
+    }
 }

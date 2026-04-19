@@ -45,10 +45,10 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
         <!--  ── Spring Security (added) ──────────────────────────────────────  -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <!--  ── Validation (added for @Valid on DTOs) ───────────────────────  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
