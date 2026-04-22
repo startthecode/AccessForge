@@ -22,7 +22,7 @@ public class UserProfile {
     @Length(max = 25,min = 3)
     String lastname;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Length(max = 280,min = 10)
     String bio;
 
