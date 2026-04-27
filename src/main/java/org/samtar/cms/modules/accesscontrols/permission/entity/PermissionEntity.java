@@ -5,7 +5,7 @@ import org.samtar.cms.modules.accesscontrols.authority.entity.AuthorityEntity;
 import org.samtar.cms.modules.accesscontrols.branch.entity.BranchEntity;
 import org.samtar.cms.modules.accesscontrols.department.entity.DepartmentEntity;
 import org.samtar.cms.modules.accesscontrols.designation.entity.DesignationEntity;
-import org.samtar.cms.modules.accesscontrols.user.entity.UserProfile;
+import org.samtar.cms.modules.accesscontrols.user.entity.UserProfileEntity;
 
 @Entity
 @Table(name = "permissions")
@@ -17,7 +17,7 @@ public class PermissionEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userProfileID")
-    private UserProfile userProfile;
+    private UserProfileEntity userProfile;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department",nullable = true)
@@ -35,7 +35,7 @@ public class PermissionEntity {
     @JoinColumn(name = "authority")
     private AuthorityEntity authority;
 
-    public PermissionEntity(AuthorityEntity authority, BranchEntity branch, DepartmentEntity department, DesignationEntity designation, UserProfile userProfile) {
+    public PermissionEntity(AuthorityEntity authority, BranchEntity branch, DepartmentEntity department, DesignationEntity designation, UserProfileEntity userProfile) {
         this.authority = authority;
         this.branch = branch;
         this.department = department;
@@ -50,12 +50,12 @@ public class PermissionEntity {
         return id;
     }
 
-    public UserProfile getUserProfile() {
+    public UserProfileEntity getUserProfile() {
         return userProfile;
     }
 
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
+    public void setUserProfile(UserProfileEntity userProfileEntity) {
+        this.userProfile = userProfileEntity;
     }
 
     public DepartmentEntity getDepartment() {

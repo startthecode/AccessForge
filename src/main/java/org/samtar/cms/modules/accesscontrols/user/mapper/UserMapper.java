@@ -10,14 +10,10 @@ import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
 
 @Mapper(componentModel = "spring",uses = UserProfileMapper.class)
 public interface UserMapper {
-    @Mapping(ignore = true, target = "branchID")
-    @Mapping(ignore = true, target = "departmentID" )
     @Mapping(ignore = true, target = "statusId")
+    @Mapping(ignore = true, target = "id")
     @BeanMapping(nullValuePropertyMappingStrategy =  NullValuePropertyMappingStrategy.IGNORE)
     public UserEntity toEntity(CreateUserDto res);
 
-    @Mapping(target = "userProfile", source = "userProfile.branchID.name")
-    @Mapping(target = "userProfile",source = "userProfile.departmentID.name")
     public CreateUserResponse tResponse(UserEntity entity);
-
 }

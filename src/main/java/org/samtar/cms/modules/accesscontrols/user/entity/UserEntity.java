@@ -36,9 +36,9 @@ public class UserEntity {
 
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "userProfile")
-    UserProfile userProfile;
+    UserProfileEntity userProfile;
 
-    public UserEntity(Boolean accountLocked, String email, Boolean isSuperAdmin, String password, StatusEntity statusId, String username, UserProfile userProfile) {
+    public UserEntity(Boolean accountLocked, String email, Boolean isSuperAdmin, String password, StatusEntity statusId, String username, UserProfileEntity userProfile) {
         this.accountLocked = accountLocked;
         this.email = email;
         this.isSuperAdmin = isSuperAdmin;
@@ -104,11 +104,11 @@ public class UserEntity {
         this.username = username;
     }
 
-    public UserProfile getUserProfile() {
+    public UserProfileEntity getUserProfile() {
         return userProfile;
     }
 
-    public void setUserProfile(UserProfile userProfile) {
+    public void setUserProfile(UserProfileEntity userProfile) {
         this.userProfile = userProfile;
     }
 }

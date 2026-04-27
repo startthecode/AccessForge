@@ -57,7 +57,9 @@ private ObjectMapper mapper;
      return http.csrf(AbstractHttpConfigurer::disable)
              .authorizeHttpRequests(
                      auth->auth
-                             .requestMatchers("/api/auth/**","/api/testing/unprotected")
+                             .requestMatchers(
+                                     "/api/v1/auth/**",
+                                     "/api/testing/unprotected")
                              .permitAll()
                              .anyRequest()
                              .authenticated()

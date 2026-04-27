@@ -2,22 +2,20 @@ package org.samtar.cms.modules.accesscontrols.department.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import org.samtar.cms.modules.shared.enums.Genders;
 
 @Entity
 @Table(name = "department")
 public class DepartmentEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "department_id")
-    @SequenceGenerator(name = "department_id",sequenceName = "department_id",allocationSize = 5)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "department_id")
+    @SequenceGenerator(name = "department_id", sequenceName = "department_id", allocationSize = 5)
     Long id;
 
     @NotBlank
-    @Column(unique = true,nullable = false)
-    @Enumerated(EnumType.STRING)
-    Genders department;
+    @Column(unique = true, nullable = false)
+    String department;
 
-    public DepartmentEntity(Genders department) {
+    public DepartmentEntity(String department) {
         this.department = department;
     }
 
@@ -28,12 +26,11 @@ public class DepartmentEntity {
         return id;
     }
 
-    public Genders getDepartment() {
+    public String getDepartment() {
         return department;
     }
 
-    public void setDepartment(Genders department) {
+    public void setDepartment(String department) {
         this.department = department;
     }
 }
-

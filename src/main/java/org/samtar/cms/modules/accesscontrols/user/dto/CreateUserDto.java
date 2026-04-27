@@ -12,6 +12,6 @@ public record CreateUserDto(
         @NotBlank
         String email,
         @Valid
-        UserProfileDto profileDto
+        UserProfileDto profile
 ) {
 }

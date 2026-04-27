@@ -24,7 +24,9 @@ import java.util.List;
 @Component
 public class JwtFilterChain extends OncePerRequestFilter {
 
-    private final List<String> unProtectedRoutes = List.of("/api/auth/**", "/api/testing/**");
+    private final List<String> unProtectedRoutes = List.of(
+            "/api/v1/auth/**",
+            "/api/testing/**");
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
     private final ObjectMapper mapper;
