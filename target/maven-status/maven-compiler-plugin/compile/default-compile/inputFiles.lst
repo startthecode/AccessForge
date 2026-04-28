@@ -23,9 +23,12 @@ Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accessc
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\permission\PermissionResolver.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\permission\repository\PermissionRepository.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\controller\UserController.java
-Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\dto\CreateUserDto.java
-Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\dto\CreateUserResponse.java
-Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\dto\UserProfileDto.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\dto\request\CreateUserDto.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\dto\request\LoginRequestDto.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\dto\request\UserProfileDto.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\dto\response\AuthTokenDto.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\dto\response\CreateUserResponse.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\dto\response\UserProfileResponseDto.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\entity\UserEntity.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\entity\UserProfileEntity.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\mapper\UserMapper.java
@@ -36,6 +39,7 @@ Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accessc
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\service\imps\UserPrincipleImps.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\service\UserProfileService.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\service\UserService.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\shared\controller\Test.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\shared\entity\GenderEntity.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\shared\entity\StatusEntity.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\shared\enums\Authorities.java

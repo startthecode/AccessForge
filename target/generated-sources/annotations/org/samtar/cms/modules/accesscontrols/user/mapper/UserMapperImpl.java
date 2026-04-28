@@ -1,19 +1,23 @@
 package org.samtar.cms.modules.accesscontrols.user.mapper;
 
 import javax.annotation.processing.Generated;
-import org.samtar.cms.modules.accesscontrols.user.dto.CreateUserDto;
-import org.samtar.cms.modules.accesscontrols.user.dto.CreateUserResponse;
-import org.samtar.cms.modules.accesscontrols.user.dto.UserProfileDto;
+import org.samtar.cms.modules.accesscontrols.user.dto.request.CreateUserDto;
+import org.samtar.cms.modules.accesscontrols.user.dto.response.CreateUserResponse;
+import org.samtar.cms.modules.accesscontrols.user.dto.response.UserProfileResponseDto;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-04-27T23:49:50+0530",
-    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.46.0.v20260407-0427, environment: Java 21.0.10 (Eclipse Adoptium)"
+    date = "2026-04-28T23:06:20+0530",
+    comments = "version: 1.6.3, compiler: javac, environment: Java 25.0.2 (Oracle Corporation)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
+
+    @Autowired
+    private UserProfileMapper userProfileMapper;
 
     @Override
     public UserEntity toEntity(CreateUserDto res) {
@@ -24,7 +28,6 @@ public class UserMapperImpl implements UserMapper {
         UserEntity userEntity = new UserEntity();
 
         userEntity.setEmail( res.email() );
-        userEntity.setPassword( res.password() );
         userEntity.setUsername( res.username() );
 
         return userEntity;
@@ -36,17 +39,17 @@ public class UserMapperImpl implements UserMapper {
             return null;
         }
 
+        UserProfileResponseDto profile = null;
         Long id = null;
         String username = null;
         String email = null;
 
+        profile = userProfileMapper.toDto( entity.getUserProfile() );
         id = entity.getId();
         username = entity.getUsername();
         email = entity.getEmail();
 
-        UserProfileDto profileDto = null;
-
-        CreateUserResponse createUserResponse = new CreateUserResponse( id, username, email, profileDto );
+        CreateUserResponse createUserResponse = new CreateUserResponse( id, username, email, profile );
 
         return createUserResponse;
     }

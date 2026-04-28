@@ -38,7 +38,7 @@ this.user = user;
 
     @Override
     public boolean isAccountNonLocked() {
-        return user.getAccountLocked();
+        return !user.getAccountLocked();
     }
 
     @Override

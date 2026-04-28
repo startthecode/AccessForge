@@ -1,8 +1,7 @@
-package org.samtar.cms.modules.accesscontrols.user.dto;
+package org.samtar.cms.modules.accesscontrols.user.dto.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public record CreateUserDto(
         @NotBlank

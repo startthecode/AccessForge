@@ -62,30 +62,30 @@ CREATE TABLE IF NOT EXISTS users_profile (
 
 -- Users
 CREATE TABLE IF NOT EXISTS users (
-    id                BIGINT PRIMARY KEY DEFAULT nextval('user_id'),
-    username          VARCHAR(25)  NOT NULL UNIQUE,
-    password          VARCHAR(150) NOT NULL,
-    email             VARCHAR(40)  NOT NULL,
-    accountLocked     BOOLEAN      NOT NULL DEFAULT FALSE,
-    isSuperAdmin      BOOLEAN      NOT NULL DEFAULT FALSE,
-    statusid          BIGINT,
-    userProfileEntity BIGINT UNIQUE,
+    id              BIGINT PRIMARY KEY DEFAULT nextval('user_id'),
+    username        VARCHAR(25)  NOT NULL UNIQUE,
+    password        VARCHAR(150) NOT NULL,
+    email           VARCHAR(40)  NOT NULL,
+    account_locked  BOOLEAN      NOT NULL DEFAULT FALSE,
+    is_super_admin  BOOLEAN      NOT NULL DEFAULT FALSE,
+    statusid        BIGINT,
+    user_profile    BIGINT UNIQUE,
     CONSTRAINT fk_users_status
-        FOREIGN KEY (statusid)          REFERENCES status (id),
+        FOREIGN KEY (statusid)     REFERENCES status (id),
     CONSTRAINT fk_users_profile
-        FOREIGN KEY (userProfileEntity) REFERENCES users_profile (id)
+        FOREIGN KEY (user_profile) REFERENCES users_profile (id)
 );
 
 -- Permissions
 CREATE TABLE IF NOT EXISTS permissions (
-    id            BIGINT PRIMARY KEY DEFAULT nextval('permissions_id'),
-    userProfileID BIGINT,
-    department    BIGINT,
-    branch        BIGINT,
-    designation   BIGINT,
-    authority     BIGINT NOT NULL,
+    id              BIGINT PRIMARY KEY DEFAULT nextval('permissions_id'),
+    user_profileid  BIGINT,
+    department      BIGINT,
+    branch          BIGINT,
+    designation     BIGINT,
+    authority       BIGINT NOT NULL,
     CONSTRAINT fk_permissions_user_profile
-        FOREIGN KEY (userProfileID) REFERENCES users_profile (id),
+        FOREIGN KEY (user_profileid) REFERENCES users_profile (id),
     CONSTRAINT fk_permissions_department
         FOREIGN KEY (department)    REFERENCES department (id),
     CONSTRAINT fk_permissions_branch

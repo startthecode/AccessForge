@@ -6,6 +6,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.samtar.cms.common.exception.AuthException;
 import org.samtar.cms.modules.shared.enums.TokenTypes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -53,9 +54,9 @@ public class JwtUtils {
         try {
             return this.parserClaims(token, type, secretKey);
         } catch (ExpiredJwtException exp) {
-            throw new Exception("Expire token");
+            throw AuthException.tokenExpired(type);
         } catch (JwtException err) {
-            throw new Exception("Token fail");
+            throw AuthException.InvalidToken(type);
         }
     }
 

@@ -1,14 +1,12 @@
 package org.samtar.cms.modules.accesscontrols.user.service;
 
-import jakarta.transaction.Transactional;
 import org.samtar.cms.modules.accesscontrols.branch.entity.BranchEntity;
 import org.samtar.cms.modules.accesscontrols.branch.service.BranchService;
 import org.samtar.cms.modules.accesscontrols.department.entity.DepartmentEntity;
 import org.samtar.cms.modules.accesscontrols.department.service.DepartmentService;
 import org.samtar.cms.modules.accesscontrols.designation.entity.DesignationEntity;
 import org.samtar.cms.modules.accesscontrols.designation.service.DesignationService;
-import org.samtar.cms.modules.accesscontrols.user.dto.UserProfileDto;
-import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
+import org.samtar.cms.modules.accesscontrols.user.dto.request.UserProfileDto;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserProfileEntity;
 import org.samtar.cms.modules.accesscontrols.user.mapper.UserProfileMapper;
 import org.samtar.cms.modules.accesscontrols.user.repository.UserProfileRepository;
@@ -43,7 +41,7 @@ public class UserProfileService {
         DepartmentEntity department = departmentService.getDepartment(req.departmentID());
         DesignationEntity designation = designationService.getDesignation(req.designationID());
         BranchEntity branch = branchService.getBranch(req.branchID());
-        GenderEntity gender = genderService.getGender(req.gender());
+        GenderEntity gender = genderService.getGender(req.genderID());
         newProfile.setDepartmentID(department);
         newProfile.setBranchID(branch);
         newProfile.setDesignationID(designation);
