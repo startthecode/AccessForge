@@ -3,6 +3,7 @@ package org.samtar.cms.common.exception;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.samtar.cms.common.response.GenericResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -34,7 +35,7 @@ public class GlobalException {
                         new GenericResponse<Object>(
                                 null,
                                 e.getMessage(),
-                                HttpServletResponse.SC_NOT_FOUND,
+                                HttpStatus.INTERNAL_SERVER_ERROR,
                                 true
                         ));
     }

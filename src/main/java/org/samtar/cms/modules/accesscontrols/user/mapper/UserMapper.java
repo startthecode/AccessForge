@@ -5,7 +5,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.samtar.cms.modules.accesscontrols.user.dto.request.CreateUserDto;
-import org.samtar.cms.modules.accesscontrols.user.dto.response.AuthTokenDto;
 import org.samtar.cms.modules.accesscontrols.user.dto.response.CreateUserResponse;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
 

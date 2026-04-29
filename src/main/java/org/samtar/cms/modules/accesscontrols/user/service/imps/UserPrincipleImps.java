@@ -50,4 +50,8 @@ this.user = user;
     public boolean isEnabled() {
         return user.getStatusId().getStatus() == Status.ACTIVE;
     }
+
+    public UserEntity getUser() {
+        return user;
+    }
 }

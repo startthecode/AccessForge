@@ -1,11 +1,14 @@
 package org.samtar.cms.modules.accesscontrols.user.controller;
 
 
+import jakarta.validation.Valid;
+import org.samtar.cms.common.util.AuthCookieUtils;
 import org.samtar.cms.modules.accesscontrols.user.dto.request.CreateUserDto;
 import org.samtar.cms.modules.accesscontrols.user.dto.request.LoginRequestDto;
 import org.samtar.cms.modules.accesscontrols.user.dto.response.AuthTokenDto;
 import org.samtar.cms.modules.accesscontrols.user.dto.response.CreateUserResponse;
 import org.samtar.cms.modules.accesscontrols.user.service.UserService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,21 +25,16 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthTokenDto> signUp(@RequestBody CreateUserDto reqBody) {
-        try {
-            return ResponseEntity.ok(userService.signup(reqBody));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<AuthTokenDto> signUp(@Valid @RequestBody CreateUserDto reqBody) throws Exception {
+             AuthTokenDto response = userService.signup(reqBody);
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, AuthCookieUtils.addRefreshToken(response.refreshToken()).toString()).body(response);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<Object> signIn(@RequestBody LoginRequestDto reqBody) {
-        try {
-            return ResponseEntity.ok(userService.signin(reqBody));
-        } catch (Exception e) {
-            return ResponseEntity.ok(e);
-        }
+    public ResponseEntity<Object> signIn(@Valid @RequestBody LoginRequestDto reqBody) throws Exception {
+        AuthTokenDto response = userService.signin(reqBody);
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, AuthCookieUtils.addRefreshToken(response.refreshToken()).toString()).body(response);
     }
+
 
 }

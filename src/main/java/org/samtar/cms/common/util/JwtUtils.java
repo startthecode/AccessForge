@@ -1,4 +1,4 @@
-package org.samtar.cms.config.security;
+package org.samtar.cms.common.util;
 
 
 import io.jsonwebtoken.Claims;
@@ -15,11 +15,10 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HexFormat;
 import java.util.Map;
-import java.util.Objects;
 
 @Component
 public class JwtUtils {
-    private SecretKey accessSecret;
+    private final SecretKey accessSecret;
     private final SecretKey refreshSecret;
     private final long accessTimer;
     private final long refreshTimer;
@@ -49,7 +48,7 @@ public class JwtUtils {
                 .issuedAt(new Date()).compact();
     }
 
-    public Claims decodeToken(String token, TokenTypes type) throws Exception {
+    public Claims decodeToken(String token, TokenTypes type)  {
         SecretKey secretKey = type == TokenTypes.Access ? this.accessSecret : this.refreshSecret;
         try {
             return this.parserClaims(token, type, secretKey);
@@ -61,7 +60,7 @@ public class JwtUtils {
     }
 
 
-    public Claims parserClaims(String token, TokenTypes type, SecretKey secret) throws Exception {
+    private Claims parserClaims(String token, TokenTypes type, SecretKey secret)  {
         return Jwts.parser().verifyWith(secret).build().parseSignedClaims(token).getPayload();
     }
 

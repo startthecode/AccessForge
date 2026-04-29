@@ -7,8 +7,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
+import org.samtar.cms.common.exception.AuthException;
+import org.samtar.cms.common.response.GenericResponse;
+import org.samtar.cms.common.util.JwtUtils;
 import org.samtar.cms.modules.accesscontrols.user.service.imps.UserDetailImps;
 import org.samtar.cms.modules.shared.enums.TokenTypes;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,15 +55,20 @@ public class JwtFilterChain extends OncePerRequestFilter {
                                     @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain) throws ServletException, IOException {
         try {
+            String header = request.getHeader("Authorization");
+            if(header == null || !header.startsWith("Bearer")) {
+                throw AuthException.missingAuthHeaders();
+            }
             String accessToken = request.getHeader("Authorization").substring(7);
+
             if (accessToken.isEmpty()) {
                 throw new RuntimeException("Access token required");
             }
             ;
             Claims tokenData = jwtUtils.decodeToken(accessToken, TokenTypes.Access);
             String username = tokenData.get("username", String.class);
-            boolean isAlreadyAuthenticated = SecurityContextHolder.getContext().getAuthentication() == null;
-            if (!username.isEmpty() && isAlreadyAuthenticated) {
+            boolean isNotAuthenticated = SecurityContextHolder.getContext().getAuthentication() == null;
+            if (!username.isEmpty() && isNotAuthenticated) {
                 UserDetails user = userDetailImps.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -75,7 +85,13 @@ public class JwtFilterChain extends OncePerRequestFilter {
     private void sendErrorResponse(HttpServletResponse response,Exception exception) throws IOException{
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        mapper.writeValue(response.getWriter(),"something went wrong");
+        if(exception instanceof AuthException){
+            GenericResponse<Null> res = new GenericResponse<>(null,exception.getMessage(),((AuthException) exception).getStatuscode(),true);
+            mapper.writeValue(response.getWriter(),res);
+        }else {
+            GenericResponse<Null> res = new GenericResponse<>(null,"Something went wrong", HttpStatus.NOT_FOUND,true);
+            mapper.writeValue(response.getWriter(),res);
+        }
     }
 
 }

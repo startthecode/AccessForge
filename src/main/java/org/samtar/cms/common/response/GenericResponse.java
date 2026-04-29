@@ -1,12 +1,14 @@
 package org.samtar.cms.common.response;
 
+import org.springframework.http.HttpStatus;
+
 public class GenericResponse<T> {
-    private int statusCode;
+    private HttpStatus  statusCode;
     private String message;
     private T data;
     private T error;
 
-    public GenericResponse(T data, String message, int statusCode,boolean isError) {
+    public GenericResponse(T data, String message, HttpStatus statusCode, boolean isError) {
         if(isError){
             this.error = data;
         }else {
@@ -40,11 +42,11 @@ public class GenericResponse<T> {
         this.message = message;
     }
 
-    public int getStatusCode() {
+    public HttpStatus  getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(int statusCode) {
+    public void setStatusCode(HttpStatus  statusCode) {
         this.statusCode = statusCode;
     }
 }

@@ -1,11 +1,15 @@
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\CmsApplication.java
-Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\exception\CustomException.java
-Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\exception\GlobalExceptionHandler.java
-Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\response\ApiResponse.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\exception\AuthException.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\exception\ExceptionPattern.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\exception\GenericException.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\exception\GlobalException.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\exception\UserException.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\response\GenericResponse.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\util\AuthCookieUtils.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\util\DateUtil.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\common\util\JwtUtils.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\config\mapper\Mapper.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\config\security\JwtFilterChain.java
-Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\config\security\JwtUtils.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\config\security\SecurityConfig.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\config\web\CorsConfig.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\authority\entity\AuthorityEntity.java
@@ -20,7 +24,6 @@ Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accessc
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\designation\repository\DesignationRepository.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\designation\service\DesignationService.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\permission\entity\PermissionEntity.java
-Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\permission\PermissionResolver.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\permission\repository\PermissionRepository.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\controller\UserController.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\user\dto\request\CreateUserDto.java

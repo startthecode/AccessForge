@@ -1,20 +1,22 @@
 package org.samtar.cms.modules.accesscontrols.user.service;
 
 import jakarta.transaction.Transactional;
-import org.samtar.cms.config.security.JwtUtils;
+import org.samtar.cms.common.exception.AuthException;
+import org.samtar.cms.common.exception.UserException;
+import org.samtar.cms.common.util.JwtUtils;
 import org.samtar.cms.modules.accesscontrols.user.dto.request.CreateUserDto;
 import org.samtar.cms.modules.accesscontrols.user.dto.request.LoginRequestDto;
 import org.samtar.cms.modules.accesscontrols.user.dto.response.AuthTokenDto;
-import org.samtar.cms.modules.accesscontrols.user.dto.response.CreateUserResponse;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserProfileEntity;
 import org.samtar.cms.modules.accesscontrols.user.mapper.UserMapper;
 import org.samtar.cms.modules.accesscontrols.user.repository.UserRepository;
+import org.samtar.cms.modules.accesscontrols.user.service.imps.UserPrincipleImps;
 import org.samtar.cms.modules.shared.enums.Status;
 import org.samtar.cms.modules.shared.enums.TokenTypes;
 import org.samtar.cms.modules.shared.service.StatusService;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +33,7 @@ public class UserService {
     JwtUtils jwtUtils;
     AuthenticationManager authenticationManager;
 
-    public UserService(UserRepository userRepository,
-                       UserMapper mapper,
-                       StatusService statusService,
-                       UserProfileService userProfileService,
-                       PasswordEncoder passwordEncoder,
-                       AuthenticationManager authenticationManager,
-                       JwtUtils jwtUtils) {
+    public UserService(UserRepository userRepository, UserMapper mapper, StatusService statusService, UserProfileService userProfileService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
         this.statusService = statusService;
         this.mapper = mapper;
@@ -57,41 +53,59 @@ public class UserService {
         newUser.setPassword(passwordEncoder.encode(reqBody.password()));
         newUser.setStatusId(statusService.getStatusEntity(Status.ACTIVE));
         Map<String, Object> accessToken = new HashMap<>();
-        accessToken.put("Token", jwtUtils.generateToken(Map.of("username", reqBody.username()), TokenTypes.Access));
+        accessToken.put("token", jwtUtils.generateToken(Map.of("username", reqBody.username()), TokenTypes.Access));
         String refreshToken = jwtUtils.generateToken(Map.of("username", reqBody.username()), TokenTypes.Refresh);
         userRepository.save(newUser);
         return new AuthTokenDto(accessToken, refreshToken);
     }
 
-    @Transactional
+
     public AuthTokenDto signin(LoginRequestDto reqBody) throws Exception {
-        System.out.println(reqBody);
-        UserEntity user = getUserOrThrow(reqBody.username(), "Username not found");
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(reqBody.username(), reqBody.password()));
+        Authentication auth;
+        try {
+            auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(reqBody.username(), reqBody.password()));
+
+        } catch (BadCredentialsException e) {
+            throw AuthException.InvalidCredentials("Invalid username or password", null);
+
+        } catch (LockedException e) {
+            throw AuthException.InvalidCredentials("Your account is locked", null);
+
+        } catch (DisabledException e) {
+            throw AuthException.InvalidCredentials("Your account is disabled", null);
+
+        }
+
+        UserPrincipleImps principle = (UserPrincipleImps) auth.getPrincipal();
+        assert principle != null;
+        UserEntity user = principle.getUser();
+
         Map<String, Object> tokenData = new HashMap<>();
         tokenData.put("username", user.getUsername());
-        Map<String, Object> accessToken = new HashMap<>();
-        accessToken.put("Token", jwtUtils.generateToken(tokenData, TokenTypes.Access));
+
+        String accessToken = jwtUtils.generateToken(tokenData, TokenTypes.Access);
+
         String refreshToken = jwtUtils.generateToken(tokenData, TokenTypes.Refresh);
-        return new AuthTokenDto(accessToken, refreshToken);
+
+        return new AuthTokenDto(Map.of("token", accessToken), refreshToken);
     }
 
 
     // Helpers
-
     public UserEntity getUserOrThrow(String username, String error) throws Exception {
-        return userRepository.findByUsername(username).orElseThrow(() -> new Exception(error));
+        return userRepository.findByUsername(username).orElseThrow(UserException::userNotFound);
     }
 
     public UserEntity getUserOrThrow(Long id, String error) throws Exception {
-        return userRepository.findById(id).orElseThrow(() -> new Exception(error));
+        return userRepository.findById(id).orElseThrow(UserException::userNotFound);
     }
 
-    public boolean isUserExists(String id) {
-        return userRepository.findByUsername(id).isPresent();
+    public boolean isUserExists(String username) {
+        return userRepository.existsByUsername(username);
     }
 
     public boolean isEmailExists(String email) {
-        return userRepository.findByEmail(email).isPresent();
+        return userRepository.existsByEmail(email);
     }
+
 }
