@@ -25,6 +25,18 @@ public class GlobalException {
                         ));
     }
 
+    @ExceptionHandler(CustomModuleException.class)
+    public ResponseEntity<GenericResponse<Object>> handleCustomModuleErrors(CustomModuleException e){
+        return ResponseEntity.status(e.getStatuscode())
+                .body(
+                        new GenericResponse<Object>(
+                                e.getError(),
+                                e.getMessage(),
+                                e.getStatuscode(),
+                                true
+                        ));
+    }
+
 
 
     // Unknown Errors

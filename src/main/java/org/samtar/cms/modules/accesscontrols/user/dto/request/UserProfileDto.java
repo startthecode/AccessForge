@@ -7,11 +7,7 @@ public record UserProfileDto(
                 @NotBlank String name,
                 @NotBlank String bio,
                 @NotBlank String lastname,
-
-                @NotBlank Long genderID,
-                @NotNull Long branchID,
-                @NotNull Long departmentID,
-                @NotNull Long designationID
+                @NotBlank Long genderID
 
 ) {
 

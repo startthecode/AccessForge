@@ -18,20 +18,3 @@ INSERT INTO authority (authority) VALUES ('DELETE');
 INSERT INTO authority (authority) VALUES ('UPDATE');
 INSERT INTO authority (authority) VALUES ('ALL');
 INSERT INTO authority (authority) VALUES ('ALL_WITH_REVIEW');
-
--- Insert branch data
-INSERT INTO branch (branch) VALUES ('Main Branch');
-INSERT INTO branch (branch) VALUES ('Branch A');
-INSERT INTO branch (branch) VALUES ('Branch B');
-
--- Insert department data
-INSERT INTO department (department) VALUES ('IT');
-INSERT INTO department (department) VALUES ('HR');
-INSERT INTO department (department) VALUES ('Finance');
-INSERT INTO department (department) VALUES ('Marketing');
-
--- Insert designation data
-INSERT INTO designation (designation) VALUES ('Software Engineer');
-INSERT INTO designation (designation) VALUES ('Manager');
-INSERT INTO designation (designation) VALUES ('Analyst');
-INSERT INTO designation (designation) VALUES ('Intern');
