@@ -13,29 +13,29 @@ public class ModuleAssignEntity {
     Long id;
 
     @ManyToOne
-    CustomModuleEntity module_id;
+    CustomModuleEntity moduleId;
 
     @ManyToOne
-    ModuleChildrensEntity child_id;
+    ModuleChildrensEntity childId;
 
     @ManyToOne
-    UserEntity user_id;
+    UserEntity userId;
 
-    public ModuleAssignEntity(ModuleChildrensEntity child_id, CustomModuleEntity module_id, UserEntity user_id) {
-        this.child_id = child_id;
-        this.module_id = module_id;
-        this.user_id = user_id;
+    public ModuleAssignEntity(ModuleChildrensEntity childId, CustomModuleEntity moduleId, UserEntity userId) {
+        this.childId = childId;
+        this.moduleId = moduleId;
+        this.userId = userId;
     }
     public ModuleAssignEntity() {
 
     }
 
-    public ModuleChildrensEntity getChild_id() {
-        return child_id;
+    public ModuleChildrensEntity getChildId() {
+        return childId;
     }
 
-    public void setChild_id(ModuleChildrensEntity child_id) {
-        this.child_id = child_id;
+    public void setChildId(ModuleChildrensEntity childId) {
+        this.childId = childId;
     }
 
     public Long getId() {
@@ -46,19 +46,19 @@ public class ModuleAssignEntity {
         this.id = id;
     }
 
-    public CustomModuleEntity getModule_id() {
-        return module_id;
+    public CustomModuleEntity getModuleId() {
+        return moduleId;
     }
 
-    public void setModule_id(CustomModuleEntity module_id) {
-        this.module_id = module_id;
+    public void setModuleId(CustomModuleEntity moduleId) {
+        this.moduleId = moduleId;
     }
 
-    public UserEntity getUser_id() {
-        return user_id;
+    public UserEntity getUserId() {
+        return userId;
     }
 
-    public void setUser_id(UserEntity user_id) {
-        this.user_id = user_id;
+    public void setUserId(UserEntity userId) {
+        this.userId = userId;
     }
 }

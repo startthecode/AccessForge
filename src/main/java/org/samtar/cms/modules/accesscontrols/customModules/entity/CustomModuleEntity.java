@@ -12,37 +12,38 @@ import java.time.LocalDateTime;
 @Table(name = "custom_modules")
 public class CustomModuleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "customModules_id")
-    @SequenceGenerator(name = "customModules_id",sequenceName = "customModules_id",allocationSize = 5)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "custom_modules_id")
+    @SequenceGenerator(name = "custom_modules_id", sequenceName = "custom_modules_id", allocationSize = 5)
     Long id;
 
     @NotBlank
-    @Column(unique = true,nullable = false)
-    String module_name;
+    @Column(unique = true, nullable = false)
+    String moduleName;
 
     @NotNull
     @Column(nullable = false)
-    boolean has_child;
+    boolean hasChild;
 
     @CreationTimestamp
     LocalDateTime createdAt;
 
     @ManyToOne
-    UserEntity created_by;
+    UserEntity createdBy;
 
-    public CustomModuleEntity( boolean has_child, String module_name) {
-        this.has_child = has_child;
-        this.module_name = module_name;
+    public CustomModuleEntity(boolean hasChild, String moduleName) {
+        this.hasChild = hasChild;
+        this.moduleName = moduleName;
     }
+
     public CustomModuleEntity() {
-      }
-
-    public UserEntity getCreated_by() {
-        return created_by;
     }
 
-    public void setCreated_by(UserEntity created_by) {
-        this.created_by = created_by;
+    public UserEntity getcreatedBy() {
+        return createdBy;
+    }
+
+    public void setcreatedBy(UserEntity createdBy) {
+        this.createdBy = createdBy;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -53,12 +54,12 @@ public class CustomModuleEntity {
         this.createdAt = createdAt;
     }
 
-    public boolean isHas_child() {
-        return has_child;
+    public boolean isHasChild() {
+        return hasChild;
     }
 
-    public void setHas_child(boolean has_child) {
-        this.has_child = has_child;
+    public void setHasChild(boolean hasChild) {
+        this.hasChild = hasChild;
     }
 
     public Long getId() {
@@ -69,11 +70,11 @@ public class CustomModuleEntity {
         this.id = id;
     }
 
-    public String getModule_name() {
-        return module_name;
+    public String getModuleName() {
+        return moduleName;
     }
 
-    public void setModule_name(String module_name) {
-        this.module_name = module_name;
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
     }
 }

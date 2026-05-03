@@ -5,7 +5,7 @@ CREATE SEQUENCE IF NOT EXISTS authority_id      START WITH 1 INCREMENT BY 5;
 CREATE SEQUENCE IF NOT EXISTS user_profile      START WITH 1 INCREMENT BY 10;
 CREATE SEQUENCE IF NOT EXISTS user_id           START WITH 1 INCREMENT BY 10;
 CREATE SEQUENCE IF NOT EXISTS permissions_id    START WITH 1 INCREMENT BY 5;
-CREATE SEQUENCE IF NOT EXISTS customModules_id  START WITH 1 INCREMENT BY 5;
+CREATE SEQUENCE IF NOT EXISTS custom_modules_id START WITH 1 INCREMENT BY 5;
 CREATE SEQUENCE IF NOT EXISTS children_modules  START WITH 1 INCREMENT BY 5;
 
 -- Lookup tables
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Custom modules (replaces designation as the permission target)
 CREATE TABLE IF NOT EXISTS custom_modules (
-    id             BIGINT PRIMARY KEY DEFAULT nextval('customModules_id'),
+    id             BIGINT PRIMARY KEY DEFAULT nextval('custom_modules_id'),
     module_name    VARCHAR(255) NOT NULL UNIQUE,
     has_child      BOOLEAN      NOT NULL,
     created_at     TIMESTAMP,
@@ -65,8 +65,8 @@ CREATE TABLE IF NOT EXISTS custom_modules (
 -- Children of custom modules
 CREATE TABLE IF NOT EXISTS module_childrens (
     id          BIGINT PRIMARY KEY DEFAULT nextval('children_modules'),
+    child_name  VARCHAR(255) NOT NULL,
     created_at  TIMESTAMP,
-    has_child   BOOLEAN NOT NULL,
     parent_id   BIGINT,
     user_id_id  BIGINT,
     CONSTRAINT fk_module_childrens_parent

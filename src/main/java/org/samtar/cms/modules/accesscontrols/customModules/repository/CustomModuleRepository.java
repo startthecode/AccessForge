@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface CustomModuleRepository extends JpaRepository<CustomModuleEntity, Long> {
-    Optional<CustomModuleEntity> findByModule_name(String name);
+    Optional<CustomModuleEntity> findByModuleName(String name);
 }

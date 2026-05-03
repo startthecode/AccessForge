@@ -16,7 +16,9 @@ import org.samtar.cms.modules.shared.enums.Status;
 import org.samtar.cms.modules.shared.enums.TokenTypes;
 import org.samtar.cms.modules.shared.service.StatusService;
 import org.springframework.security.authentication.*;
+import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +35,9 @@ public class UserService {
     JwtUtils jwtUtils;
     AuthenticationManager authenticationManager;
 
-    public UserService(UserRepository userRepository, UserMapper mapper, StatusService statusService, UserProfileService userProfileService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+    public UserService(UserRepository userRepository, UserMapper mapper, StatusService statusService,
+            UserProfileService userProfileService, PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
         this.statusService = statusService;
         this.mapper = mapper;
@@ -45,8 +49,10 @@ public class UserService {
 
     @Transactional
     public AuthTokenDto signup(CreateUserDto reqBody) throws Exception {
-        if (isUserExists(reqBody.username())) throw new Exception("Username already exists");
-        if (isEmailExists(reqBody.email())) throw new Exception("Email already exists");
+        if (isUserExists(reqBody.username()))
+            throw new Exception("Username already exists");
+        if (isEmailExists(reqBody.email()))
+            throw new Exception("Email already exists");
         UserEntity newUser = mapper.toEntity(reqBody);
         UserProfileEntity newUserProfile = userProfileService.createUserProfile(reqBody.profile());
         newUser.setUserProfile(newUserProfile);
@@ -59,11 +65,11 @@ public class UserService {
         return new AuthTokenDto(accessToken, refreshToken);
     }
 
-
     public AuthTokenDto signin(LoginRequestDto reqBody) throws Exception {
         Authentication auth;
         try {
-            auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(reqBody.username(), reqBody.password()));
+            auth = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(reqBody.username(), reqBody.password()));
 
         } catch (BadCredentialsException e) {
             throw AuthException.InvalidCredentials("Invalid username or password", null);
@@ -90,7 +96,6 @@ public class UserService {
         return new AuthTokenDto(Map.of("token", accessToken), refreshToken);
     }
 
-
     // Helpers
     public UserEntity getUserOrThrow(String username, String error) throws Exception {
         return userRepository.findByUsername(username).orElseThrow(UserException::userNotFound);
@@ -106,6 +111,15 @@ public class UserService {
 
     public boolean isEmailExists(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    public UserEntity getCurrentUserEntity() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        assert auth != null;
+        UserPrincipleImps principle = (UserPrincipleImps) auth.getPrincipal();
+        assert principle != null;
+        return principle.getUser();
     }
 
 }

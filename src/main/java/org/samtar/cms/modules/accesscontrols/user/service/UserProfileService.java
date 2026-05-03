@@ -1,6 +1,5 @@
 package org.samtar.cms.modules.accesscontrols.user.service;
 
-import org.samtar.cms.modules.accesscontrols.customModules.service.CustomModuleService;
 import org.samtar.cms.modules.accesscontrols.user.dto.request.UserProfileDto;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserProfileEntity;
 import org.samtar.cms.modules.accesscontrols.user.mapper.UserProfileMapper;
@@ -11,16 +10,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserProfileService {
-    CustomModuleService designationService;
     UserProfileRepository userProfileRepository;
      UserProfileMapper mapper;
      GenderService genderService;
     public UserProfileService(
-                              CustomModuleService designationService,
                               UserProfileRepository userProfileRepository,
                               GenderService genderService,
                               UserProfileMapper mapper) {
-        this.designationService = designationService;
         this.userProfileRepository = userProfileRepository;
         this.mapper  = mapper;
         this.genderService = genderService;

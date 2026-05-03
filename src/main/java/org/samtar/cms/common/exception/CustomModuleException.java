@@ -19,4 +19,9 @@ public class CustomModuleException extends ExceptionPattern {
     public static CustomModuleException moduleAlreadyExists() {
         return new CustomModuleException("custom module already exists", HttpStatus.CONFLICT, null);
     }
+
+    public static CustomModuleException moduleChildrensNotFound() {
+        return new CustomModuleException("Invalid module id", HttpStatus.NOT_FOUND, null);
+    }
+    
 }

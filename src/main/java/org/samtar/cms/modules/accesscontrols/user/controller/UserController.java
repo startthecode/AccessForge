@@ -6,7 +6,6 @@ import org.samtar.cms.common.util.AuthCookieUtils;
 import org.samtar.cms.modules.accesscontrols.user.dto.request.CreateUserDto;
 import org.samtar.cms.modules.accesscontrols.user.dto.request.LoginRequestDto;
 import org.samtar.cms.modules.accesscontrols.user.dto.response.AuthTokenDto;
-import org.samtar.cms.modules.accesscontrols.user.dto.response.CreateUserResponse;
 import org.samtar.cms.modules.accesscontrols.user.service.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

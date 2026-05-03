@@ -28,7 +28,7 @@ public class UserProfileEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "genderID")
+    @JoinColumn(name = "gender_id")
     GenderEntity genderID;
 
     public UserProfileEntity(String bio,
