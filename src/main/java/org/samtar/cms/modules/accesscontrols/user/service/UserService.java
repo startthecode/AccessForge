@@ -16,7 +16,6 @@ import org.samtar.cms.modules.shared.enums.Status;
 import org.samtar.cms.modules.shared.enums.TokenTypes;
 import org.samtar.cms.modules.shared.service.StatusService;
 import org.springframework.security.authentication.*;
-import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;

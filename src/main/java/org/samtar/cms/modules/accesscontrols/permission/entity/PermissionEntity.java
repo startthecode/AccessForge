@@ -1,38 +1,55 @@
 package org.samtar.cms.modules.accesscontrols.permission.entity;
 
 import jakarta.persistence.*;
+import org.samtar.cms.common.exception.CstmEntityException;
 import org.samtar.cms.modules.accesscontrols.authority.entity.AuthorityEntity;
-import org.samtar.cms.modules.accesscontrols.customModules.entity.CustomModuleEntity;
+import org.samtar.cms.modules.accesscontrols.customModules.entity.ModuleChildrensEntity;
+import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserProfileEntity;
 
 @Entity
 @Table(name = "permissions")
 public class PermissionEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "permissions_id")
-    @SequenceGenerator(name = "permissions_id",sequenceName = "permissions_id",allocationSize = 5)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "permissions_id")
+    @SequenceGenerator(name = "permissions_id",
+            sequenceName = "permissions_id",
+            allocationSize = 5)
     Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userProfileID")
-    private UserProfileEntity userProfile;
-
-
-
+    @JoinColumn(nullable = true)
+    private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "designation",nullable = true)
-    private CustomModuleEntity designation;
+    @JoinColumn(name = "custom_module",nullable = true)
+    private ModuleChildrensEntity customModule;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "authority")
     private AuthorityEntity authority;
 
-    public PermissionEntity(AuthorityEntity authority,  CustomModuleEntity designation, UserProfileEntity userProfile) {
-        this.authority = authority;
 
-        this.designation = designation;
-        this.userProfile = userProfile;
+    @PrePersist
+    @PreUpdate
+    private void validateFields(){
+        boolean hasUser = user != null;
+        boolean hasCustomModule = customModule != null;
+        if (hasUser == hasCustomModule) {
+            throw CstmEntityException.EntityValidationFail("Exactly one of user or customModule must be provided");
+        }
+
+    }
+
+
+    public PermissionEntity(AuthorityEntity authority,
+                            ModuleChildrensEntity module,
+                            UserProfileEntity userProfile,
+                            UserEntity user) {
+        this.authority = authority;
+        this.user = user;
+        this.customModule = module;
     }
 
     public PermissionEntity() {
@@ -42,24 +59,34 @@ public class PermissionEntity {
         return id;
     }
 
-    public UserProfileEntity getUserProfile() {
-        return userProfile;
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public ModuleChildrensEntity getModule() {
+        return customModule;
+    }
+
+    public void setModule(ModuleChildrensEntity module) {
+        this.customModule = module;
     }
 
     public void setUserProfile(UserProfileEntity userProfileEntity) {
-        this.userProfile = userProfileEntity;
+
     }
 
-
-
-
-
-    public CustomModuleEntity getDesignation() {
-        return designation;
+    public ModuleChildrensEntity getDesignation() {
+        return customModule;
     }
 
-    public void setDesignation(CustomModuleEntity designation) {
-        this.designation = designation;
+    public void setDesignation(ModuleChildrensEntity module) {
+
+        this.customModule = module;
     }
 
     public AuthorityEntity getAuthority() {
