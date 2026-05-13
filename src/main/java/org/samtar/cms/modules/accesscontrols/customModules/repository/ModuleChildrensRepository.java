@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ModuleChildrensRepository extends JpaRepository<ModuleChildrensEntity,Long> {
     List<ModuleChildrensEntity> findByParent_id(Long id);
+    Boolean findByUserAndId(Long userid,Long id);
 }

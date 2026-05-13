@@ -23,17 +23,17 @@ public class ModuleChildrensEntity {
     CustomModuleEntity parent;
 
     @ManyToOne
-    UserEntity userId;
+    UserEntity user;
 
     @CreationTimestamp
     LocalDateTime createdAt;
 
-    public ModuleChildrensEntity(String childName, LocalDateTime createdAt, Long id, CustomModuleEntity parent, UserEntity userId) {
+    public ModuleChildrensEntity(String childName, LocalDateTime createdAt, Long id, CustomModuleEntity parent, UserEntity user) {
         this.childName = childName;
         this.createdAt = createdAt;
         this.id = id;
         this.parent = parent;
-        this.userId = userId;
+        this.user = user;
     }
     public ModuleChildrensEntity(){
     }
@@ -69,10 +69,10 @@ public class ModuleChildrensEntity {
     }
 
     public UserEntity getUserId() {
-        return userId;
+        return user;
     }
 
-    public void setUserId(UserEntity userId) {
-        this.userId = userId;
+    public void setUserId(UserEntity user) {
+        this.user = user;
     }
 }

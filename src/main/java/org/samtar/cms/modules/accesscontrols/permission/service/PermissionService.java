@@ -1,6 +1,7 @@
 package org.samtar.cms.modules.accesscontrols.permission.service;
 
 import jakarta.transaction.Transactional;
+import org.samtar.cms.common.exception.PermissionException;
 import org.samtar.cms.modules.accesscontrols.authority.entity.AuthorityEntity;
 import org.samtar.cms.modules.accesscontrols.authority.service.AuthorityServices;
 import org.samtar.cms.modules.accesscontrols.customModules.entity.ModuleChildrensEntity;
@@ -12,6 +13,8 @@ import org.samtar.cms.modules.accesscontrols.permission.mapper.PermissionMapper;
 import org.samtar.cms.modules.accesscontrols.permission.repository.PermissionRepository;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
 import org.samtar.cms.modules.accesscontrols.user.service.UserService;
+import org.samtar.cms.modules.shared.enums.Authorities;
+import org.samtar.cms.modules.shared.enums.CmsModules;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +24,7 @@ public class PermissionService {
     ModuleChildrensService moduleChildrensService;
     AuthorityServices authorityServices;
     PermissionMapper permissionMapper;
+
 
     public PermissionService(PermissionRepository permissionRepository,
                              UserService userService,
@@ -47,6 +51,17 @@ public class PermissionService {
         }
         assignPermission.setAuthority(authority);
       return permissionMapper.toResponse(permissionRepository.save(assignPermission));
+    }
+
+    public boolean hasPermission(Authorities authorities, long moduleID  ) throws Exception{
+         UserEntity currentUser = userService.getCurrentUserEntity();
+         if(currentUser.getSuperAdmin()) return true;
+         PermissionEntity permissions = permissionRepository.findByUserAndCmsModule(currentUser.getId(),moduleID).orElse(null);
+         if(permissions.getCustomModule() != null && moduleChildrensService.isUserBelongsToModule(currentUser.getId())) return true;
+         if(permissions.getAuthority().getAuthority() == Authorities.ALL) return true;
+         return
+    }
+
     }
 
 

@@ -3,9 +3,11 @@ package org.samtar.cms.modules.accesscontrols.permission.entity;
 import jakarta.persistence.*;
 import org.samtar.cms.common.exception.CstmEntityException;
 import org.samtar.cms.modules.accesscontrols.authority.entity.AuthorityEntity;
+import org.samtar.cms.modules.accesscontrols.cmsModules.entity.CmsModuleEntity;
 import org.samtar.cms.modules.accesscontrols.customModules.entity.ModuleChildrensEntity;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserProfileEntity;
+import org.samtar.cms.modules.shared.enums.CmsModules;
 
 @Entity
 @Table(name = "permissions")
@@ -27,9 +29,13 @@ public class PermissionEntity {
     private ModuleChildrensEntity customModule;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "authority")
+    @JoinColumn(name = "authority",nullable = false)
     private AuthorityEntity authority;
 
+    @ManyToOne(fetch =  FetchType.LAZY)
+    @Enumerated(EnumType.STRING)
+    @JoinColumn(nullable = false)
+    CmsModuleEntity cmsModule;
 
     @PrePersist
     @PreUpdate
@@ -39,7 +45,6 @@ public class PermissionEntity {
         if (hasUser == hasCustomModule) {
             throw CstmEntityException.EntityValidationFail("Exactly one of user or customModule must be provided");
         }
-
     }
 
 
@@ -91,6 +96,22 @@ public class PermissionEntity {
 
     public AuthorityEntity getAuthority() {
         return authority;
+    }
+
+    public CmsModuleEntity getCmsModule() {
+        return cmsModule;
+    }
+
+    public void setCmsModule(CmsModuleEntity cmsModule) {
+        this.cmsModule = cmsModule;
+    }
+
+    public ModuleChildrensEntity getCustomModule() {
+        return customModule;
+    }
+
+    public void setCustomModule(ModuleChildrensEntity customModule) {
+        this.customModule = customModule;
     }
 
     public void setAuthority(AuthorityEntity authority) {

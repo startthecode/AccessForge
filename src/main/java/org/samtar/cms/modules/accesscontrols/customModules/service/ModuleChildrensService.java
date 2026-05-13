@@ -58,4 +58,8 @@ public class ModuleChildrensService {
     public ModuleChildrensEntity getModuleChildrensOrThrow(Long id) {
         return moduleChildrensRepository.findById(id).orElseThrow(CustomModuleException::moduleChildrensNotFound);
     }
+
+    public Boolean isUserBelongsToModule(moduleId,Long userid){
+      return  moduleChildrensRepository.findByUserAnd(userid);
+    }
 }
