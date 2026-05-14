@@ -11,6 +11,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RequiresPermission {
-    String module();
+    String moduleCode();
     Authorities authority();
 }

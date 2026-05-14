@@ -54,4 +54,9 @@ this.user = user;
     public UserEntity getUser() {
         return user;
     }
+
+    public boolean isSuperAdmin() {
+        return Boolean.TRUE.equals(user.getSuperAdmin());
+    }
+
 }

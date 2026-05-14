@@ -6,36 +6,55 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "module_childrens")
 public class ModuleChildrensEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "children_modules")
-    @SequenceGenerator(name = "children_modules",sequenceName = "children_modules",allocationSize = 5)
-    Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "children_modules")
+    @SequenceGenerator(
+            name = "children_modules",
+            sequenceName = "children_modules",
+            allocationSize = 5
+    )
+    private Long id;
 
     @NotBlank
     @Column(nullable = false)
-    String childName;
+    private String childName;
 
     @ManyToOne
-    CustomModuleEntity parent;
+    private CustomModuleEntity parent;
 
-    @ManyToOne
-    UserEntity user;
+    @ManyToMany
+    @JoinTable(
+            name = "module_children_users",
+            joinColumns = @JoinColumn(name = "module_children_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<UserEntity> users = new ArrayList<>();;
 
     @CreationTimestamp
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
-    public ModuleChildrensEntity(String childName, LocalDateTime createdAt, Long id, CustomModuleEntity parent, UserEntity user) {
+    public ModuleChildrensEntity() {
+    }
+
+    public ModuleChildrensEntity(
+            String childName,
+            LocalDateTime createdAt,
+            Long id,
+            CustomModuleEntity parent,
+            List<UserEntity> users
+    ) {
         this.childName = childName;
         this.createdAt = createdAt;
         this.id = id;
         this.parent = parent;
-        this.user = user;
-    }
-    public ModuleChildrensEntity(){
+        this.users = users;
     }
 
     public String getChildName() {
@@ -58,8 +77,6 @@ public class ModuleChildrensEntity {
         return id;
     }
 
-
-
     public CustomModuleEntity getParent() {
         return parent;
     }
@@ -68,11 +85,11 @@ public class ModuleChildrensEntity {
         this.parent = parent;
     }
 
-    public UserEntity getUserId() {
-        return user;
+    public List<UserEntity> getUsers() {
+        return users;
     }
 
-    public void setUserId(UserEntity user) {
-        this.user = user;
+    public void setUsers(List<UserEntity> users) {
+        this.users = users;
     }
 }

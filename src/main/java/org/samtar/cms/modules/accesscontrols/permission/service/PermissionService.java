@@ -17,6 +17,9 @@ import org.samtar.cms.modules.shared.enums.Authorities;
 import org.samtar.cms.modules.shared.enums.CmsModules;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
+
 @Service
 public class PermissionService {
     PermissionRepository permissionRepository;
@@ -29,8 +32,8 @@ public class PermissionService {
     public PermissionService(PermissionRepository permissionRepository,
                              UserService userService,
                              AuthorityServices authorityServices,
-    PermissionMapper permissionMapper
-                             ) {
+                             PermissionMapper permissionMapper
+    ) {
         this.permissionRepository = permissionRepository;
         this.userService = userService;
         this.authorityServices = authorityServices;
@@ -50,51 +53,29 @@ public class PermissionService {
             assignPermission.setModule(module);
         }
         assignPermission.setAuthority(authority);
-      return permissionMapper.toResponse(permissionRepository.save(assignPermission));
+        return permissionMapper.toResponse(permissionRepository.save(assignPermission));
     }
 
-    public boolean hasPermission(Authorities authorities, long moduleID  ) throws Exception{
-         UserEntity currentUser = userService.getCurrentUserEntity();
-         if(currentUser.getSuperAdmin()) return true;
-         PermissionEntity permissions = permissionRepository.findByUserAndCmsModule(currentUser.getId(),moduleID).orElse(null);
-         if(permissions.getCustomModule() != null && moduleChildrensService.isUserBelongsToModule(currentUser.getId())) return true;
-         if(permissions.getAuthority().getAuthority() == Authorities.ALL) return true;
-         return
+    public boolean hasPermission(Authorities authorities, String moduleCode, UserEntity currentUser) throws Exception {
+
+        if (currentUser.getSuperAdmin()) return true;
+        PermissionEntity permissionsByUser = permissionRepository.findByUserAndCmsModuleModuleCode(currentUser.getId(), moduleCode).orElse(null);
+        if (permissionsByUser != null) {
+            return permissionsByUser.getAuthority().getAuthority() == authorities;
+        } else {
+            List<PermissionEntity> permissionByCmsModule = permissionRepository.
+                    findByCmsModuleModuleCodeAndUseridIsNull(moduleCode);
+            boolean hasPermission = false;
+            permissionsByUser = permissionByCmsModule.stream()
+                    .filter(e -> e.getCustomModule()
+                            .getUsers()
+                            .stream()
+                            .anyMatch(b -> b.getId().equals(currentUser.getId())))
+                    .findFirst().orElseThrow(PermissionException::accessDenied);
+            return permissionsByUser.getAuthority().getAuthority() == authorities;
+        }
     }
-
-    }
-
-
 }
-
-
-
-
-//@Service
-//public class PermissionService {
-//
-//    private final PermissionRepository permissionRepository;
-//
-//    public PermissionService(PermissionRepository permissionRepository) {
-//        this.permissionRepository = permissionRepository;
-//    }
-//
-//    public boolean hasPermission(UserEntity user, String module, Authorities required) {
-//        if (Boolean.TRUE.equals(user.getIsSuperAdmin())) return true;
-//
-//        Long profileId = user.getUserProfile().getId();
-//        Set<Authorities> granted = permissionRepository.findAuthorities(profileId, module);
-//
-//        if (granted.contains(Authorities.ALL)) return true;
-//        if (granted.contains(Authorities.ALL_WITH_REVIEW)) {
-//            // hook: flag the request for review-required handling later
-//            return true;
-//        }
-//        return granted.contains(required);
-//    }
-//}
-
-
 
 
 //package org.samtar.cms.security.aspect;

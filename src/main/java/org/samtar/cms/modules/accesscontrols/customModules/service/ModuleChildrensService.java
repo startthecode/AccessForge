@@ -59,7 +59,7 @@ public class ModuleChildrensService {
         return moduleChildrensRepository.findById(id).orElseThrow(CustomModuleException::moduleChildrensNotFound);
     }
 
-    public Boolean isUserBelongsToModule(moduleId,Long userid){
+    public Boolean isUserBelongsToModule(Long moduleId,Long userid){
       return  moduleChildrensRepository.findByUserAnd(userid);
     }
 }
