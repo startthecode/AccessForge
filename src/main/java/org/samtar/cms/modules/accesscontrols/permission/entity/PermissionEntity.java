@@ -5,9 +5,8 @@ import org.samtar.cms.common.exception.CstmEntityException;
 import org.samtar.cms.modules.accesscontrols.authority.entity.AuthorityEntity;
 import org.samtar.cms.modules.accesscontrols.cmsModules.entity.CmsModuleEntity;
 import org.samtar.cms.modules.accesscontrols.customModules.entity.ModuleChildrensEntity;
-import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
-import org.samtar.cms.modules.accesscontrols.user.entity.UserProfileEntity;
-import org.samtar.cms.modules.shared.enums.CmsModules;
+import org.samtar.cms.modules.accesscontrols.users.entity.UserEntity;
+import org.samtar.cms.modules.accesscontrols.users.entity.UserProfileEntity;
 
 @Entity
 @Table(name = "permissions")
@@ -22,7 +21,7 @@ public class PermissionEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = true)
-    private UserEntity user;
+    private UserEntity users;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "custom_module",nullable = true)
@@ -40,7 +39,7 @@ public class PermissionEntity {
     @PrePersist
     @PreUpdate
     private void validateFields(){
-        boolean hasUser = user != null;
+        boolean hasUser = users != null;
         boolean hasCustomModule = customModule != null;
         if (hasUser == hasCustomModule) {
             throw CstmEntityException.EntityValidationFail("Exactly one of user or customModule must be provided");
@@ -53,7 +52,7 @@ public class PermissionEntity {
                             UserProfileEntity userProfile,
                             UserEntity user) {
         this.authority = authority;
-        this.user = user;
+        this.users = user;
         this.customModule = module;
     }
 
@@ -66,11 +65,11 @@ public class PermissionEntity {
 
 
     public UserEntity getUser() {
-        return user;
+        return users;
     }
 
     public void setUser(UserEntity user) {
-        this.user = user;
+        this.users = user;
     }
 
     public ModuleChildrensEntity getModule() {

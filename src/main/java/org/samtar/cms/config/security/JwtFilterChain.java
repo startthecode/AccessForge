@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Null;
 import org.samtar.cms.common.exception.AuthException;
 import org.samtar.cms.common.response.GenericResponse;
 import org.samtar.cms.common.util.JwtUtils;
-import org.samtar.cms.modules.accesscontrols.user.service.imps.UserDetailImps;
+import org.samtar.cms.modules.accesscontrols.users.service.imps.UserDetailImps;
 import org.samtar.cms.modules.shared.enums.TokenTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -2,7 +2,7 @@ package org.samtar.cms.modules.accesscontrols.customModules.entity;
 
 
 import jakarta.persistence.*;
-import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
+import org.samtar.cms.modules.accesscontrols.users.entity.UserEntity;
 
 @Entity
 @Table(name = "module_Assign")

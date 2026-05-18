@@ -3,14 +3,14 @@ package org.samtar.cms.modules.accesscontrols.customModules.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
-import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
+import org.samtar.cms.modules.accesscontrols.users.entity.UserEntity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "module_childrens")
+@Table(name = "module_childrens" )
 public class ModuleChildrensEntity {
 
     @Id
@@ -33,7 +33,10 @@ public class ModuleChildrensEntity {
     @JoinTable(
             name = "module_children_users",
             joinColumns = @JoinColumn(name = "module_children_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            inverseJoinColumns = @JoinColumn(name = "user_id"),
+            uniqueConstraints =@UniqueConstraint(
+                    columnNames = {"module_children_id","user_id"}
+            )
     )
     private List<UserEntity> users = new ArrayList<>();;
 

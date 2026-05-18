@@ -49,6 +49,5 @@ public class CustomModuleController {
     public void delete(@PathVariable Long id) {
         customModuleService.deleteModule(id);
     }
-    
 
 }

@@ -24,6 +24,14 @@ CREATE TABLE IF NOT EXISTS authority (
     authority VARCHAR(255) NOT NULL UNIQUE
 );
 
+-- CMS modules (BLOG, PAGES, CUSTOM_MODULES, ...). IDs are managed manually (no sequence).
+CREATE TABLE IF NOT EXISTS cms_modules (
+    id           BIGINT PRIMARY KEY,
+    module_name  VARCHAR(255) NOT NULL UNIQUE,
+    module_code  VARCHAR(255) NOT NULL UNIQUE,
+    release_date DATE
+);
+
 -- User profile (no branch/department/designation; gender only)
 CREATE TABLE IF NOT EXISTS users_profile (
     id        BIGINT PRIMARY KEY DEFAULT nextval('user_profile'),
@@ -75,6 +83,17 @@ CREATE TABLE IF NOT EXISTS module_childrens (
         FOREIGN KEY (user_id_id) REFERENCES users (id)
 );
 
+-- Join table for ModuleChildrensEntity.users (@ManyToMany with UserEntity)
+CREATE TABLE IF NOT EXISTS module_children_users (
+    module_children_id BIGINT NOT NULL,
+    user_id            BIGINT NOT NULL,
+    PRIMARY KEY (module_children_id, user_id),
+    CONSTRAINT fk_module_children_users_child
+        FOREIGN KEY (module_children_id) REFERENCES module_childrens (id),
+    CONSTRAINT fk_module_children_users_user
+        FOREIGN KEY (user_id)            REFERENCES users            (id)
+);
+
 -- Module assignment (links a user to a module / child)
 CREATE TABLE IF NOT EXISTS module_assign (
     id           BIGINT PRIMARY KEY DEFAULT nextval('children_modules'),
@@ -89,16 +108,19 @@ CREATE TABLE IF NOT EXISTS module_assign (
         FOREIGN KEY (user_id_id)   REFERENCES users (id)
 );
 
--- Permissions (now scoped to a custom module via the "designation" FK column)
+-- Permissions: scoped to a CMS module, granted to either a user OR a custom-module child
 CREATE TABLE IF NOT EXISTS permissions (
-    id              BIGINT PRIMARY KEY DEFAULT nextval('permissions_id'),
-    user_profile_id BIGINT,
-    designation     BIGINT,
-    authority       BIGINT NOT NULL,
-    CONSTRAINT fk_permissions_user_profile
-        FOREIGN KEY (user_profile_id) REFERENCES users_profile  (id),
-    CONSTRAINT fk_permissions_module
-        FOREIGN KEY (designation)     REFERENCES custom_modules (id),
+    id             BIGINT PRIMARY KEY DEFAULT nextval('permissions_id'),
+    user_id        BIGINT,
+    custom_module  BIGINT,
+    authority      BIGINT NOT NULL,
+    cms_module_id  BIGINT NOT NULL,
+    CONSTRAINT fk_permissions_user
+        FOREIGN KEY (user_id)       REFERENCES users            (id),
+    CONSTRAINT fk_permissions_custom_module
+        FOREIGN KEY (custom_module) REFERENCES module_childrens (id),
     CONSTRAINT fk_permissions_authority
-        FOREIGN KEY (authority)       REFERENCES authority      (id)
+        FOREIGN KEY (authority)     REFERENCES authority        (id),
+    CONSTRAINT fk_permissions_cms_module
+        FOREIGN KEY (cms_module_id) REFERENCES cms_modules      (id)
 );

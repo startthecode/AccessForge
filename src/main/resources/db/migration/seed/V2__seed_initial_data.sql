@@ -18,3 +18,8 @@ INSERT INTO authority (authority) VALUES ('DELETE');
 INSERT INTO authority (authority) VALUES ('UPDATE');
 INSERT INTO authority (authority) VALUES ('ALL');
 INSERT INTO authority (authority) VALUES ('ALL_WITH_REVIEW');
+
+-- Insert CMS modules (IDs managed manually since CmsModuleEntity has no @GeneratedValue)
+INSERT INTO cms_modules (id, module_name, module_code) VALUES (1, 'Blog',           'BLOG');
+INSERT INTO cms_modules (id, module_name, module_code) VALUES (2, 'Pages',          'PAGES');
+INSERT INTO cms_modules (id, module_name, module_code) VALUES (3, 'Custom Modules', 'CUSTOM_MODULES');

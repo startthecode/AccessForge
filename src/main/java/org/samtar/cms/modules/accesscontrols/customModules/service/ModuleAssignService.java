@@ -5,8 +5,8 @@ import org.samtar.cms.modules.accesscontrols.customModules.entity.CustomModuleEn
 import org.samtar.cms.modules.accesscontrols.customModules.entity.ModuleAssignEntity;
 import org.samtar.cms.modules.accesscontrols.customModules.entity.ModuleChildrensEntity;
 import org.samtar.cms.modules.accesscontrols.customModules.repository.ModuleAssignRepository;
-import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
-import org.samtar.cms.modules.accesscontrols.user.service.UserService;
+import org.samtar.cms.modules.accesscontrols.users.entity.UserEntity;
+import org.samtar.cms.modules.accesscontrols.users.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service

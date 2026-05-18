@@ -11,14 +11,12 @@ import org.samtar.cms.modules.accesscontrols.permission.dto.PermissionResDto;
 import org.samtar.cms.modules.accesscontrols.permission.entity.PermissionEntity;
 import org.samtar.cms.modules.accesscontrols.permission.mapper.PermissionMapper;
 import org.samtar.cms.modules.accesscontrols.permission.repository.PermissionRepository;
-import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
-import org.samtar.cms.modules.accesscontrols.user.service.UserService;
+import org.samtar.cms.modules.accesscontrols.users.entity.UserEntity;
+import org.samtar.cms.modules.accesscontrols.users.service.UserService;
 import org.samtar.cms.modules.shared.enums.Authorities;
-import org.samtar.cms.modules.shared.enums.CmsModules;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class PermissionService {
@@ -64,7 +62,7 @@ public class PermissionService {
             return permissionsByUser.getAuthority().getAuthority() == authorities;
         } else {
             List<PermissionEntity> permissionByCmsModule = permissionRepository.
-                    findByCmsModuleModuleCodeAndUseridIsNull(moduleCode);
+                    findByCmsModuleModuleCodeAndUsersIsNull(moduleCode);
             boolean hasPermission = false;
             permissionsByUser = permissionByCmsModule.stream()
                     .filter(e -> e.getCustomModule()
@@ -78,42 +76,6 @@ public class PermissionService {
 }
 
 
-//package org.samtar.cms.security.aspect;
-//
-//import org.aspectj.lang.annotation.Aspect;
-//import org.aspectj.lang.annotation.Before;
-//import org.samtar.cms.modules.accesscontrols.user.service.imps.UserPrincipleImps;
-//import org.samtar.cms.security.annotation.RequiresPermission;
-//import org.samtar.cms.security.exception.AccessDeniedException;
-//import org.samtar.cms.security.resolver.PermissionService;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.stereotype.Component;
-//
-//@Aspect
-//@Component
-//public class PermissionAspect {
-//
-//    private final PermissionService permissionService;
-//
-//    public PermissionAspect(PermissionService permissionService) {
-//        this.permissionService = permissionService;
-//    }
-//
-//    @Before("@annotation(requires)")
-//    public void check(RequiresPermission requires) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        if (auth == null || !(auth.getPrincipal() instanceof UserPrincipleImps principal)) {
-//            throw new AccessDeniedException("Not authenticated");
-//        }
-//        boolean ok = permissionService.hasPermission(
-//                principal.getUser(), requires.module(), requires.authority());
-//        if (!ok) {
-//            throw new AccessDeniedException(
-//                    "Missing " + requires.authority() + " on " + requires.module());
-//        }
-//    }
-//}
 
 
 //@PostMapping

@@ -1,13 +1,15 @@
 package org.samtar.cms.modules.accesscontrols.customModules.service;
 
 import org.samtar.cms.common.exception.CustomModuleException;
+import org.samtar.cms.modules.accesscontrols.customModules.dto.AddUserToChildReq;
 import org.samtar.cms.modules.accesscontrols.customModules.dto.CreateCldModReq;
 import org.samtar.cms.modules.accesscontrols.customModules.entity.CustomModuleEntity;
 import org.samtar.cms.modules.accesscontrols.customModules.entity.ModuleChildrensEntity;
 import org.samtar.cms.modules.accesscontrols.customModules.repository.ModuleChildrensRepository;
-import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
-import org.samtar.cms.modules.accesscontrols.user.service.UserService;
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
+import org.samtar.cms.modules.accesscontrols.users.entity.UserEntity;
+import org.samtar.cms.modules.accesscontrols.users.service.UserService;
+import org.samtar.cms.modules.shared.enums.Authorities;
+import org.samtar.cms.security.annotation.RequiresPermission;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,12 +32,14 @@ public class ModuleChildrensService {
     }
 
     public String create(CreateCldModReq body) {
+        System.out.println(body.parentid());
+        System.out.println(body.childname());
         UserEntity currentUser = userService.getCurrentUserEntity();
         CustomModuleEntity parent = customModuleService.getModuleOrThrow(body.parentid());
         ModuleChildrensEntity moduleChildrensEntity = new ModuleChildrensEntity();
         moduleChildrensEntity.setChildName(body.childname());
         moduleChildrensEntity.setParent(parent);
-        moduleChildrensEntity.setUserId(currentUser);
+//        moduleChildrensEntity.getUsers().add(currentUser);
         return moduleChildrensRepository.save(moduleChildrensEntity).getChildName();
     }
 
@@ -51,6 +55,17 @@ public class ModuleChildrensService {
         return "Module children updated successfully";
     }
 
+    @RequiresPermission(
+            moduleCode = "CUSTOM_MODULES",
+            authority = Authorities.ALL
+    )
+    public String addUserToModule(AddUserToChildReq data) throws Exception {
+        ModuleChildrensEntity module = moduleChildrensRepository.findById(data.childModuleID()).orElseThrow(CustomModuleException::moduleChildrensNotFound);
+        UserEntity userToBeAdd = userService.getUserOrThrow(data.userID(),"User not found");
+        module.getUsers().add(userToBeAdd);
+        moduleChildrensRepository.save(module);
+        return userToBeAdd.getUsername() + " added to the module " + module.getChildName();
+    }
     public String getById(Long id) {
         return moduleChildrensRepository.findById(id).get().getChildName();
     }
@@ -59,7 +74,5 @@ public class ModuleChildrensService {
         return moduleChildrensRepository.findById(id).orElseThrow(CustomModuleException::moduleChildrensNotFound);
     }
 
-    public Boolean isUserBelongsToModule(Long moduleId,Long userid){
-      return  moduleChildrensRepository.findByUserAnd(userid);
-    }
+
 }

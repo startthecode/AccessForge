@@ -3,8 +3,8 @@ package org.samtar.cms.modules.accesscontrols.customModules.service;
 import org.samtar.cms.common.exception.CustomModuleException;
 import org.samtar.cms.modules.accesscontrols.customModules.entity.CustomModuleEntity;
 import org.samtar.cms.modules.accesscontrols.customModules.repository.CustomModuleRepository;
-import org.samtar.cms.modules.accesscontrols.user.entity.UserEntity;
-import org.samtar.cms.modules.accesscontrols.user.service.UserService;
+import org.samtar.cms.modules.accesscontrols.users.entity.UserEntity;
+import org.samtar.cms.modules.accesscontrols.users.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
