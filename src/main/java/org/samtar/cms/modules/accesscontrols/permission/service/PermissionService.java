@@ -40,12 +40,12 @@ public class PermissionService {
     }
 
     @Transactional
-    public PermissionResDto createPermission(PermissionReqDto reqBody) throws Exception {
+    public PermissionResDto assignPermission(PermissionReqDto reqBody) throws Exception {
         PermissionEntity assignPermission = new PermissionEntity();
         AuthorityEntity authority = authorityServices.findAuthorityOrThrow(reqBody.authorityid());
         if (reqBody.userid() != null) {
             UserEntity user = userService.getUserOrThrow(reqBody.userid(), "User not found");
-            assignPermission.setUser(user);
+            assignPermission.setUsers(user);
         } else if (reqBody.customModule() != null) {
             ModuleChildrensEntity module = moduleChildrensService.getModuleChildrensOrThrow(reqBody.customModule());
             assignPermission.setModule(module);
@@ -57,7 +57,7 @@ public class PermissionService {
     public boolean hasPermission(Authorities authorities, String moduleCode, UserEntity currentUser) throws Exception {
 
         if (currentUser.getSuperAdmin()) return true;
-        PermissionEntity permissionsByUser = permissionRepository.findByUserAndCmsModuleModuleCode(currentUser.getId(), moduleCode).orElse(null);
+        PermissionEntity permissionsByUser = permissionRepository.findByUsers_idAndCmsModule_ModuleCode(currentUser.getId(), moduleCode).orElse(null);
         if (permissionsByUser != null) {
             return permissionsByUser.getAuthority().getAuthority() == authorities;
         } else {

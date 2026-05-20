@@ -64,11 +64,11 @@ public class PermissionEntity {
     }
 
 
-    public UserEntity getUser() {
+    public UserEntity getUsers() {
         return users;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUsers(UserEntity user) {
         this.users = user;
     }
 

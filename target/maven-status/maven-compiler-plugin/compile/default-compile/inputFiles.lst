@@ -23,6 +23,7 @@ Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accessc
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\customModules\controller\CustomModuleController.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\customModules\controller\ModuleAssignController.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\customModules\controller\ModuleChildrensController.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\customModules\dto\AddUserToChildReq.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\customModules\dto\AssignModuleReq.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\customModules\dto\CreateCldModReq.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\customModules\entity\CustomModuleEntity.java
@@ -35,6 +36,7 @@ Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accessc
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\customModules\service\CustomModuleService.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\customModules\service\ModuleAssignService.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\customModules\service\ModuleChildrensService.java
+Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\permission\controller\PermissionController.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\permission\dto\PermissionReqDto.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\permission\dto\PermissionResDto.java
 Z:\Study\java\learning\Practice\CMS\src\main\java\org\samtar\cms\modules\accesscontrols\permission\entity\PermissionEntity.java

@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface PermissionRepository extends JpaRepository<PermissionEntity, Long> {
 //    Optional<PermissionEntity> findByUser(Long id);
     List<PermissionEntity> findByCmsModuleModuleCodeAndUsersIsNull(String moduleCode);
-    Optional<PermissionEntity> findByUserAndCmsModuleModuleCode(Long id,String moduleCode);
+    Optional<PermissionEntity> findByUsers_idAndCmsModule_ModuleCode(Long id,String moduleCode);
 }

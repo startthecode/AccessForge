@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record CreateCldModReq(
         @NotNull(message = "Id cam not be blank")
-   Long parentid,
+   long parentid,
 
         @NotBlank(message = "Child name can not be blank")
         String childname

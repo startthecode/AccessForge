@@ -7,6 +7,7 @@ import org.samtar.cms.modules.accesscontrols.permission.entity.PermissionEntity;
 
 @Mapper(componentModel = "spring")
 public interface PermissionMapper {
+    @Mapping(target = "userid",source = "users.id")
     @Mapping(target = "authority",source = "authority.authority")
     @Mapping(target = "module",source = "cmsModule.moduleName")
     PermissionResDto toResponse(PermissionEntity Perm_entity);
